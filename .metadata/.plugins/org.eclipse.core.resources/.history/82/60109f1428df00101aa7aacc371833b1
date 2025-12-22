@@ -1,0 +1,5 @@
+package com.fileshare.controller;
+
+public class RoomController {
+
+}

@@ -1,0 +1,5 @@
+package com.fileshare.store;
+
+public class ImMemoryStore {
+
+}
