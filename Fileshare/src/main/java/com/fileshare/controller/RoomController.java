@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fileshare.dto.JoinRoomRequest;
+import com.fileshare.dto.LeaveRoomRequest;
 import com.fileshare.entity.Room;
 import com.fileshare.service.RoomService;
 
@@ -29,4 +30,10 @@ public class RoomController {
 	public String joinRoom(@RequestBody JoinRoomRequest request) {
 		return roomService.joinRoom(request.getRoomKey(), request.getUsername());
 	}
+
+	@PostMapping("/leave")
+	public String leaveRoom(@RequestBody LeaveRoomRequest request) {
+		return roomService.leaveRoom(request.getRoomKey(), request.getUsername());
+	}
+
 }

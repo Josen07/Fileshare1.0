@@ -55,4 +55,37 @@ public class RoomService {
 
 	}
 
+	public String leaveRoom(String roomKey, String username) {
+
+		Room room = store.rooms.get(roomKey);
+
+		if (room == null) {
+			return "ROOM_NOT_FOUND";
+		}
+
+		if (!room.getMembers().containsKey(username)) {
+			return "NOT_A_MEMBER";
+		}
+
+		// Remove user
+		room.getMembers().remove(username);
+
+		// If room is empty → delete room
+		if (room.getMembers().isEmpty()) {
+			store.rooms.remove(roomKey);
+			return "ROOM_DELETED";
+		}
+
+		// If owner left → transfer ownership
+		if (room.getOwner().equals(username)) {
+			String newOwner = room.getMembers().keySet().iterator().next();
+			room.getMembers().get(newOwner).setCanSend(true);
+			room = new Room(roomKey, newOwner, room.getExpiryTime());
+			store.rooms.put(roomKey, room);
+			return "OWNERSHIP_TRANSFERRED_TO_" + newOwner;
+		}
+
+		return "LEFT_ROOM_SUCCESSFULLY";
+	}
+
 }
