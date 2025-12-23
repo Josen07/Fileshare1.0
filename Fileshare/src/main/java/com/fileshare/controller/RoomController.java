@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fileshare.dto.FileSendPermissionRequest;
 import com.fileshare.dto.JoinRoomRequest;
 import com.fileshare.dto.LeaveRoomRequest;
 import com.fileshare.entity.Room;
@@ -34,6 +35,16 @@ public class RoomController {
 	@PostMapping("/leave")
 	public String leaveRoom(@RequestBody LeaveRoomRequest request) {
 		return roomService.leaveRoom(request.getRoomKey(), request.getUsername());
+	}
+	
+	@PostMapping("/allow-send")
+	public String allowSend(@RequestBody FileSendPermissionRequest request) {
+	    return roomService.allowSend(request);
+	}
+
+	@PostMapping("/revoke-send")
+	public String revokeSend(@RequestBody FileSendPermissionRequest request) {
+	    return roomService.revokeSend(request);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.fileshare.dto.FileSendPermissionRequest;
 import com.fileshare.entity.Room;
 import com.fileshare.entity.RoomMember;
 import com.fileshare.store.InMemoryStore;
@@ -86,6 +87,44 @@ public class RoomService {
 		}
 
 		return "LEFT_ROOM_SUCCESSFULLY";
+	}
+
+	public String allowSend(FileSendPermissionRequest req) {
+
+		Room room = store.rooms.get(req.getRoomKey());
+
+		if (room == null)
+			return "ROOM_NOT_FOUND";
+
+		if (!room.getOwner().equals(req.getOwner()))
+			return "NOT_ROOM_OWNER";
+
+		RoomMember member = room.getMembers().get(req.getTargetUser());
+
+		if (member == null)
+			return "USER_NOT_IN_ROOM";
+
+		member.setCanSend(true);
+		return "SEND_PERMISSION_GRANTED";
+	}
+
+	public String revokeSend(FileSendPermissionRequest req) {
+
+		Room room = store.rooms.get(req.getRoomKey());
+
+		if (room == null)
+			return "ROOM_NOT_FOUND";
+
+		if (!room.getOwner().equals(req.getOwner()))
+			return "NOT_ROOM_OWNER";
+
+		RoomMember member = room.getMembers().get(req.getTargetUser());
+
+		if (member == null)
+			return "USER_NOT_IN_ROOM";
+
+		member.setCanSend(false);
+		return "SEND_PERMISSION_REVOKED";
 	}
 
 }
