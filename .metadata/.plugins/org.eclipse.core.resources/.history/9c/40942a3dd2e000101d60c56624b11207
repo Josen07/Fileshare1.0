@@ -1,0 +1,5 @@
+package com.fileshare.dto;
+
+public class FileRegisterRequest {
+
+}

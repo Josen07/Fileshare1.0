@@ -1,0 +1,32 @@
+package com.fileshare.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.fileshare.dto.SignalRequest;
+import com.fileshare.entity.SignalMessage;
+import com.fileshare.service.SignalService;
+
+@RestController
+@RequestMapping("/api/signal")
+public class SignalController {
+
+    private final SignalService signalService;
+
+    public SignalController(SignalService signalService) {
+        this.signalService = signalService;
+    }
+
+    @PostMapping("/send")
+    public void send(@RequestBody SignalRequest request) {
+        signalService.sendSignal(request);
+    }
+
+    @GetMapping("/receive")
+    public List<SignalMessage> receive(
+            @RequestParam String user,
+            @RequestParam String roomKey) {
+        return signalService.receiveSignals(user, roomKey);
+    }
+}

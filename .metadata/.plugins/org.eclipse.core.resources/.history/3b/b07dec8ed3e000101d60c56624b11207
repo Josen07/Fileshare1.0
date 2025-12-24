@@ -1,0 +1,5 @@
+package com.fileshare.entity;
+
+public class SignalMessage {
+
+}

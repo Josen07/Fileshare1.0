@@ -1,0 +1,27 @@
+package com.fileshare.store;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.stereotype.Component;
+
+import com.fileshare.entity.FileMeta;
+import com.fileshare.entity.Room;
+import com.fileshare.entity.SignalMessage;
+
+// for temporary database purpose...
+
+@Component
+public class InMemoryStore {
+
+	public Map<String, Room> rooms = new ConcurrentHashMap<>();
+	
+	public Map<String, List<FileMeta>> roomFiles = new HashMap<>();
+	
+	public List<SignalMessage> signals = new ArrayList<>();
+
+
+}

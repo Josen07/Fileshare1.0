@@ -1,11 +1,17 @@
 package com.fileshare.store;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Component;
 
+import com.fileshare.entity.FileMeta;
 import com.fileshare.entity.Room;
+import com.fileshare.entity.SignalMessage;
+import com.fileshare.entity.User;
 
 // for temporary database purpose...
 
@@ -13,4 +19,18 @@ import com.fileshare.entity.Room;
 public class InMemoryStore {
 
 	public Map<String, Room> rooms = new ConcurrentHashMap<>();
+	
+	public Map<String, List<FileMeta>> roomFiles = new HashMap<>();
+	
+	public List<SignalMessage> signals = new ArrayList<>();
+	
+	public Map<String, User> users = new HashMap<>();
+
+	public InMemoryStore() {
+        users.put("john", new User("john", "1234"));
+        users.put("alex", new User("alex", "1234"));
+    }
+
+
+
 }

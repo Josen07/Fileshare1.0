@@ -1,0 +1,37 @@
+package com.fileshare.service;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.fileshare.dto.SignalRequest;
+import com.fileshare.entity.SignalMessage;
+import com.fileshare.store.InMemoryStore;
+
+@Service
+public class SignalService {
+
+	private final InMemoryStore store;
+
+	public SignalService(InMemoryStore store) {
+		this.store = store;
+	}
+
+	public void sendSignal(SignalRequest req) {
+		store.signals
+				.add(new SignalMessage(req.getFrom(), req.getTo(), req.getRoomKey(), req.getType(), req.getPayload()));
+	}
+
+	public List<SignalMessage> receiveSignals(String user, String roomKey) {
+
+		List<SignalMessage> userSignals = store.signals.stream()
+				.filter(s -> s.getTo().equals(user) && s.getRoomKey().equals(roomKey)).collect(Collectors.toList());
+
+		// remove after delivery
+		store.signals.removeAll(userSignals);
+
+		return userSignals;
+	}
+}

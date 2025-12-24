@@ -1,0 +1,5 @@
+package com.fileshare.security;
+
+public class JwtFilter {
+
+}

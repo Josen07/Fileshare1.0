@@ -1,0 +1,22 @@
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+
+    private final InMemoryStore store;
+
+    public AuthController(InMemoryStore store) {
+        this.store = store;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest req) {
+
+        User user = store.users.get(req.getUsername());
+
+        if (user == null || !user.getPassword().equals(req.getPassword())) {
+            return "INVALID_CREDENTIALS";
+        }
+
+        return JwtUtil.generateToken(user.getUsername());
+    }
+}

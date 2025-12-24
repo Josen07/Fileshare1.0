@@ -1,0 +1,5 @@
+package com.fileshare.service;
+
+public class SignalService {
+
+}
